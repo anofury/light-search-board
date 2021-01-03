@@ -1,0 +1,121 @@
+.data-block {
+    font-size: 15px;
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .data-header,
+    .data-line {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+
+        span {
+            flex: 1;
+            word-break: break-all;
+
+            &:first-child {
+                flex-basis: 25%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            &:last-child {
+                word-break: keep-all;
+                white-space: nowrap;
+                text-align: right;
+            }
+        }
+    }
+
+    .data-tip {
+        text-align: center;
+        color: #606266;
+        padding: 50px;
+    }
+
+    .data-header {
+        font-weight: bold;
+        background-color: #409eff;
+        color: #ffffff;
+        flex: 0 0 auto;
+    }
+
+    .data-body {
+        flex: 1 1 auto;
+        overflow: auto;
+    }
+
+    .data-line {
+        &:nth-child(2n) {
+            background-color: #d9edf7;
+        }
+    }
+
+    .data-pagination {
+        display: flex;
+        align-items: center;
+        padding: 20px 10px;
+        color: #606266;
+
+        @media (max-width: 768px) {
+            padding: 10px;
+        }
+
+        .pagination-count {
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .pagination-action {
+            button {
+                margin: 5px;
+                background-color: #f4f4f5;
+                color: #606266;
+                font-weight: bold;
+                width: 32px;
+                height: 30px;
+                line-height: 30px;
+                border: none;
+                border-radius: 2px;
+                cursor: pointer;
+
+                &:focus {
+                    outline: 0;
+                }
+
+                &:hover {
+                    color: #409eff;
+                }
+
+                &:disabled {
+                    color: #c0c4cc;
+                    cursor: not-allowed;
+                }
+
+                &.current {
+                    background-color: #409eff;
+                    color: #fff;
+                }
+            }
+
+            select {
+                color: #606266;
+                font-weight: bold;
+                height: 30px;
+                line-height: 30px;
+                border: 1px solid #dcdfe6;
+                border-radius: 2px;
+                margin: 5px;
+                cursor: pointer;
+
+                &:focus {
+                    outline: 0;
+                    border-color: #409eff;
+                }
+            }
+        }
+    }
+}
