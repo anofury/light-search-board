@@ -54,7 +54,7 @@ module.exports = merge(common, {
         rules: [
             {
                 test: /\.(css|less)/,
-                loader: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
+                loader: [/*MiniCssExtractPlugin.loader,*/'style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
                 // loader: 'css-loader',
                 // options: {
                 //     modules: {
@@ -66,8 +66,8 @@ module.exports = merge(common, {
         ],
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: '[name].css?[contenthash:8]',
-        }),
+        // new MiniCssExtractPlugin({
+        //     filename: '[name].css?[contenthash:8]',
+        // }),
     ],
 })

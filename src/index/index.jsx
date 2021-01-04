@@ -36,7 +36,7 @@ class Index extends Component {
             }
             this.setState({
                 loading: false,
-                data: [...data/*, ...data*/]
+                data: data
             })
         }).catch(err => {
             this.setState({
@@ -51,6 +51,7 @@ class Index extends Component {
         this.setState({
             applying: true,
         })
+        ApplyForm.setTips('提交中..')
         submitApply('', {
             param1: applyParam.url,
             param2: applyParam.email

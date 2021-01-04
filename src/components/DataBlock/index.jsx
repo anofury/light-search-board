@@ -1,25 +1,49 @@
 import { memo, useState, useEffect } from 'react'
 import './index.less'
 
+const PAGE_BLOCK = 8
+const PAGE_INDENT = 3
+
 function DataBlock({ ...props }) {
     let { loading, data, pageSizeSelect } = props
-    let flag = false
 
     const [pageSize, setPageSize] = useState(props.pageSize || 10)
     const [page, setPage] = useState(1)
 
-    const getPageCount = () => Math.ceil(data.length / pageSize)
+    const getTotalPage = () => Math.ceil(data.length / pageSize)
+    const getPageShowList = () => {
+        const totalPage = getTotalPage()
+        let pageConfig = []
+
+        if (totalPage <= PAGE_BLOCK) {
+            pageConfig = Array.from({ length: totalPage }).map((_, idx) => idx + 1)
+        } else if (page + PAGE_INDENT >= totalPage) {
+            pageConfig = [1, '...'].concat(Array.from({ length: PAGE_BLOCK - 2 }).map((_, idx) => idx + totalPage - PAGE_BLOCK + 3))
+        } else if (page - PAGE_INDENT <= 1) {
+            pageConfig = Array.from({ length: PAGE_BLOCK - 2 }).map((_, idx) => idx + 1).concat(['...', totalPage])
+        } else {
+            pageConfig = [...[1, '...'], ...Array.from({ length: PAGE_BLOCK - 4 }).map((_, i) => i + page - 2), ...['...', totalPage]]
+        }
+
+        return pageConfig
+    }
     const onChangePage = cPage => {
         if (!data.length) return
-        const pageCount = getPageCount()
+        const totalPage = getTotalPage()
         if (cPage < 1) cPage = 1
-        if (cPage > pageCount) cPage = pageCount
+        if (cPage > totalPage) cPage = totalPage
         setPage(cPage)
     }
     const onPageSizeChange = e => {
-        flag = false
         setPageSize(+e.target.value)
     }
+
+    useEffect(() => {
+        if (loading) {
+            setPageSize(props.pageSize)
+            setPage(1)
+        }
+    }, [loading])
 
     useEffect(() => {
         onChangePage(page)
@@ -51,25 +75,17 @@ function DataBlock({ ...props }) {
                     <div className='pagination-action'>
                         <button onClick={onChangePage.bind(this, page - 1)} disabled={page === 1}>‹</button>
                         {
-                            Array.apply(null, Array(getPageCount())).map(e => 1).map((item, idx) => {
-                                const cPage = idx + 1
-                                // TODO 指示器
-                                // if (getPageCount() > 8 && idx >= ~~(getPageCount() / 2) - 4 && idx <= getPageCount() - 3) {
-                                //     if (!flag) {
-                                //         flag = true
-                                //         return <button key={cPage}>..</button>
-                                //     }
-                                // } else {
-                                    return <button className={page === cPage ? 'current' : ''}
-                                        onClick={onChangePage.bind(this, cPage)} key={cPage}
-                                    >{cPage}</button>
-                                // }
-                            })
+                            getPageShowList().map(showItem =>
+                                isNaN(+showItem) ? <button disabled>{showItem}</button>
+                                    : <button className={page === showItem ? 'current' : ''}
+                                        onClick={onChangePage.bind(this, showItem)}
+                                    >{showItem}</button>
+                            )
                         }
-                        <button onClick={onChangePage.bind(this, page + 1)} disabled={page === getPageCount()}>›</button>
+                        <button onClick={onChangePage.bind(this, page + 1)} disabled={page === getTotalPage()}>›</button>
                         <select onChange={onPageSizeChange}>{
                             pageSizeSelect.map(pageSizeItem =>
-                                <option value={pageSizeItem}>{pageSizeItem}条/页</option>
+                                <option value={pageSizeItem} selected={pageSizeItem === props.pageSize}>{pageSizeItem}条/页</option>
                             )
                         }
                         </select>
