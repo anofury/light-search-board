@@ -4,7 +4,7 @@ import SearchGroup from '@comp/SearchGroup'
 import DataBlock from '@comp/DataBlock'
 import ApplyButton from '@comp/ApplyButton'
 import ApplyForm from '@comp/ApplyForm'
-import { SEARCH_MODE } from '../config'
+import { SEARCH_MODE, PAGE_SIZE_MAP, DEFAULT_PAGE_SIZE } from '../config'
 import getSearchList from '../service/search'
 import submitApply from '../service/apply'
 import './index.less'
@@ -17,6 +17,7 @@ class Index extends Component {
             applying: false,
             data: []
         }
+        window.pageShow?.()
     }
 
     onTapSearch = searchParam => {
@@ -79,8 +80,11 @@ class Index extends Component {
         const { loading, data } = this.state
         return (
             <div className='bingo-search'>
-                <SearchGroup onSearch={this.onTapSearch} mode={SEARCH_MODE} />
-                <DataBlock loading={loading} data={data} pageSizeSelect={[10, 20, 40, 60, 100]} pageSize={10} />
+                <div className='search-logo'>
+                    <img src="./static/logo.png" alt="logo" />
+                </div>
+                <SearchGroup loading={loading} onSearch={this.onTapSearch} mode={SEARCH_MODE} />
+                <DataBlock loading={loading} data={data} pageSizeSelect={PAGE_SIZE_MAP} pageSize={DEFAULT_PAGE_SIZE} />
                 <ApplyButton onApply={this.onTapApply} />
             </div>
         )

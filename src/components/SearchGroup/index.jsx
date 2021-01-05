@@ -1,21 +1,19 @@
 import { memo } from 'react'
 import './index.less'
+let omode = -1
+let keyword = ''
 
 function SearchGroup({ ...props }) {
-    const { mode, onSearch } = props
-    const searchParam = {
-        mode: mode.filter(modeItem => modeItem.default)[0]?.value || mode[0]?.value || 'none',
-        keyword: ''
-    }
+    const { mode, loading, onSearch } = props
 
     const onSelectChange = e => {
-        searchParam.mode = +e.target.value
+        omode = +e.target.value
     }
     const onInputChange = e => {
-        searchParam.keyword = e.target.value.trim?.()
+        keyword = e.target.value.trim?.()
     }
     const onTapSearch = () => {
-        onSearch?.(searchParam)
+        onSearch?.({ mode: omode === -1 ? (mode.filter(modeItem => modeItem.default)[0]?.value || mode[0]?.value) : omode, keyword })
     }
     const onInputKeyPress = e => {
         if (e.key === 'Enter') {
@@ -32,7 +30,7 @@ function SearchGroup({ ...props }) {
                 )
             }</select>
             <input type="text" placeholder='请输入关键词' onChange={onInputChange} onKeyPress={onInputKeyPress} />
-            <button onClick={onTapSearch}>搜索</button>
+            <button onClick={onTapSearch} className={loading ? 'loading' : ''}>{loading ? '搜索中..' : '搜索'}</button>
         </div>
     )
 }

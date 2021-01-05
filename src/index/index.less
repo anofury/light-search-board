@@ -1,7 +1,7 @@
 @blue: #5B83AD;
 
 .bingo-search {
-    width: 768px;
+    width: 1024px;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -9,8 +9,18 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    flex: 0 0 auto;
 
-    @media (max-width: 768px) {
+    .search-logo {
+        padding: 5px 0;
+        width: 320px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 1024px) {
         width: 100%;
         padding: 0 15px;
     }

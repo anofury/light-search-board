@@ -1,8 +1,8 @@
 import { memo, useState, useEffect } from 'react'
 import './index.less'
 
-const PAGE_BLOCK = 8
-const PAGE_INDENT = 3
+const PAGE_BLOCK = 10
+const PAGE_INDENT = 5
 
 function DataBlock({ ...props }) {
     let { loading, data, pageSizeSelect } = props
@@ -40,7 +40,6 @@ function DataBlock({ ...props }) {
 
     useEffect(() => {
         if (loading) {
-            setPageSize(props.pageSize)
             setPage(1)
         }
     }, [loading])
@@ -58,8 +57,9 @@ function DataBlock({ ...props }) {
             </div>
             <div className='data-body'>
                 {
-                    loading ? <p className='data-tip'>加载中...</p>
-                        : !data.length ? <p className='data-tip'>暂无数据</p>
+                    loading ? <div class="data-tip loading-spinner">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div> : !data.length ? <p className='data-tip'>暂无数据</p>
                             : data.slice(pageSize * (page - 1), pageSize * page).map(item =>
                                 <div className='data-line' key={item.articleName}>
                                     <span><a href={item.articleUrl} target='_blank'>{item.articleName}</a></span>
@@ -70,27 +70,27 @@ function DataBlock({ ...props }) {
                 }
             </div>
             {
-                !loading ? <div className='data-pagination'>
-                    <p className='pagination-count'>共 <span>{data.length}</span> 条</p>
+                <div className='data-pagination'>
+                    <p className='pagination-count'>共 <span>{!loading ? data.length : 0}</span> 条</p>
                     <div className='pagination-action'>
                         <button onClick={onChangePage.bind(this, page - 1)} disabled={page === 1}>‹</button>
                         {
-                            getPageShowList().map(showItem =>
+                            !loading ? getPageShowList().map(showItem =>
                                 isNaN(+showItem) ? <button disabled>{showItem}</button>
                                     : <button className={page === showItem ? 'current' : ''}
                                         onClick={onChangePage.bind(this, showItem)}
                                     >{showItem}</button>
-                            )
+                            ) : null
                         }
                         <button onClick={onChangePage.bind(this, page + 1)} disabled={page === getTotalPage()}>›</button>
                         <select onChange={onPageSizeChange}>{
                             pageSizeSelect.map(pageSizeItem =>
-                                <option value={pageSizeItem} selected={pageSizeItem === props.pageSize}>{pageSizeItem}条/页</option>
+                                <option value={pageSizeItem} selected={pageSizeItem === pageSize}>{pageSizeItem}条/页</option>
                             )
                         }
                         </select>
                     </div>
-                </div> : null
+                </div>
             }
         </div>
     )

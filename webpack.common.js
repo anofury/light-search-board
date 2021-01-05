@@ -12,7 +12,7 @@ module.exports = {
 	},
 	output: {
 		path: BUILD_DIR,
-		filename: '[name].js?[hash:8]',
+		filename: 'static/[name].js?[hash:8]',
 	},
 	externals: {
 		'react': 'React',
