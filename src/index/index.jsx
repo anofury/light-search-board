@@ -14,9 +14,9 @@ class Index extends Component {
         super(props)
         this.state = {
             loading: false,
-            applying: false,
             data: []
         }
+        this.applying = false
         window.pageShow?.()
     }
 
@@ -29,7 +29,6 @@ class Index extends Component {
             param1: searchParam.mode,
             param2: searchParam.keyword
         }).then(resp => {
-            console.log(resp)
             let data = resp.data
             if (!Array.isArray(data)) {
                 data.length = Object.keys(data).length
@@ -48,26 +47,21 @@ class Index extends Component {
     }
 
     onTapApply = applyParam => {
-        if (this.state.applying) return
-        this.setState({
-            applying: true,
-        })
+        if (this.applying) return
+
         ApplyForm.setTips('提交中..')
+        ApplyForm.setApplying(this.applying = true)
+
         submitApply('', {
             param1: applyParam.url,
             param2: applyParam.email
         }).then(resp => {
-            console.log(resp)
-            if (resp.msg) {
-                ApplyForm.setTips(resp.msg)
+            if (!resp.code) {
+                ApplyForm.setTips('提交成功')
             }
-            this.setState({
-                applying: false,
-            })
+            ApplyForm.setApplying(this.applying = false)
         }).catch(err => {
-            this.setState({
-                applying: false,
-            })
+            ApplyForm.setApplying(this.applying = false)
             console.log(err)
         })
     }
@@ -81,7 +75,9 @@ class Index extends Component {
         return (
             <div className='bingo-search'>
                 <div className='search-logo'>
-                    <img src="./static/logo.png" alt="logo" />
+                    <a href="https://unbug.github.io/codelf/">
+                        <img src="./static/logo.png" alt="logo" />
+                    </a>
                 </div>
                 <SearchGroup loading={loading} onSearch={this.onTapSearch} mode={SEARCH_MODE} />
                 <DataBlock loading={loading} data={data} pageSizeSelect={PAGE_SIZE_MAP} pageSize={DEFAULT_PAGE_SIZE} />

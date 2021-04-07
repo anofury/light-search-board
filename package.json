@@ -1,8 +1,8 @@
 {
-  "name": "bingo007",
+  "name": "light-search-board",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "bingo007",
+  "author": "anofury",
   "license": "MIT",
   "browserslist": [
     "android > 4",

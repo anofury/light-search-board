@@ -89,10 +89,20 @@
                 &.form-cancel {
                     color: #606266;
                     margin: 0 10px;
+
+                    &:disabled {
+                        opacity: .5;
+                        cursor: not-allowed;
+                    }
                 }
 
                 &.form-submit {
                     background-color: #409eff;
+
+                    &:disabled {
+                        opacity: .5;
+                        cursor: not-allowed;
+                    }
                 }
             }
         }

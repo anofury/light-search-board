@@ -6,6 +6,7 @@ class ApplyForm extends Component {
         super(props)
         this.state = {
             mount: false,
+            applying: false,
             errorString: '',
             tips: ''
         }
@@ -20,6 +21,10 @@ class ApplyForm extends Component {
 
     setTips = tips => {
         this.setState({ tips })
+    }
+
+    setApplying = applying => {
+        this.setState({ applying })
     }
 
     _close = e => {
@@ -48,7 +53,7 @@ class ApplyForm extends Component {
 
 
     render() {
-        const { mount, errorString, tips } = this.state
+        const { mount, applying, errorString, tips } = this.state
         return (
             mount &&
             <div className='form-container'>
@@ -67,8 +72,8 @@ class ApplyForm extends Component {
                     </div>
                     <div className='action-group'>
                         <span>{tips}</span>
-                        <button className='form-cancel' onClick={this._close}>关闭</button>
-                        <button className='form-submit' onClick={this._onTapSubmit}>提交</button>
+                        <button className='form-cancel' onClick={this._close} disabled={applying}>关闭</button>
+                        <button className='form-submit' onClick={this._onTapSubmit} disabled={applying}>提交</button>
                     </div>
                 </div>
             </div>

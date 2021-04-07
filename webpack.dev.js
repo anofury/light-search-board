@@ -2,7 +2,7 @@ const Path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common')
-const BUILD_DIR = Path.resolve(__dirname, './dist');
+const DIST_DIR = Path.resolve(__dirname, './dist');
 
 module.exports = merge(common, {
     mode: 'development',
@@ -20,7 +20,7 @@ module.exports = merge(common, {
         new webpack.HotModuleReplacementPlugin(),
     ],
     devServer: {
-        contentBase: BUILD_DIR,
+        contentBase: DIST_DIR,
         host: 'localhost',
         port: '8080',
         inline: true,

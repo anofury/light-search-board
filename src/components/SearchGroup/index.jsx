@@ -30,7 +30,7 @@ function SearchGroup({ ...props }) {
                 )
             }</select>
             <input type="text" placeholder='请输入关键词' onChange={onInputChange} onKeyPress={onInputKeyPress} />
-            <button onClick={onTapSearch} className={loading ? 'loading' : ''}>{loading ? '搜索中..' : '搜索'}</button>
+            <button onClick={onTapSearch} disabled={loading}>{loading ? '搜索中..' : '搜索'}</button>
         </div>
     )
 }

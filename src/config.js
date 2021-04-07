@@ -1,5 +1,5 @@
-export const SEARCH_API = 'https://XXXX.XXXX.XXXX/search/'
-export const APPLY_API = 'https://XXXX.XXXX.XXXX/apply/'
+export const SEARCH_API = ''
+export const APPLY_API = ''
 
 // 搜索模式
 export const SEARCH_MODE = [
@@ -16,4 +16,4 @@ export const SEARCH_MODE = [
 
 // 页码指示器
 export const PAGE_SIZE_MAP = [10, 20, 40, 60, 100]
-export const DEFAULT_PAGE_SIZE = 10
+export const DEFAULT_PAGE_SIZE = 40

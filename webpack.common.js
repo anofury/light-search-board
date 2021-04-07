@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Path = require('path');
 const SRC_DIR = Path.resolve(__dirname, './src');
-const BUILD_DIR = Path.resolve(__dirname, './dist');
+const DIST_DIR = Path.resolve(__dirname, './dist');
 const COM_DIR = Path.resolve(__dirname, './template');
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
 		index: Path.resolve(SRC_DIR, './index/index.jsx')
 	},
 	output: {
-		path: BUILD_DIR,
+		path: DIST_DIR,
 		filename: 'static/[name].js?[hash:8]',
 	},
 	externals: {
@@ -51,7 +51,7 @@ module.exports = {
 			patterns: [
 				{
 					from: COM_DIR,
-					to: BUILD_DIR,
+					to: DIST_DIR,
 					globOptions: {
 						ignore: ['**/ori/**'],
 					},
@@ -60,7 +60,7 @@ module.exports = {
 		}),
 		new HtmlWebpackPlugin({
 			template: Path.resolve(COM_DIR, './index.html'),
-			title: 'bingo search',
+			title: 'light-search-board demo',
 			inject: true,
 			timestamp: new Date().getTime(),
 			minify: {

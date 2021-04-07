@@ -60,13 +60,13 @@ function DataBlock({ ...props }) {
                     loading ? <div class="data-tip loading-spinner">
                         <span></span><span></span><span></span><span></span><span></span>
                     </div> : !data.length ? <p className='data-tip'>暂无数据</p>
-                            : data.slice(pageSize * (page - 1), pageSize * page).map(item =>
-                                <div className='data-line' key={item.articleName}>
-                                    <span><a href={item.articleUrl} target='_blank'>{item.articleName}</a></span>
-                                    <span>{item.articleAuthor}</span>
-                                    <span>{item.articleTime}</span>
-                                </div>
-                            )
+                        : data.slice(pageSize * (page - 1), pageSize * page).map(item =>
+                            <div className='data-line' key={item.articleName}>
+                                <span><a href={item.articleUrl}>{item.articleName}</a></span>
+                                <span>{item.articleAuthor}</span>
+                                <span>{item.articleTime}</span>
+                            </div>
+                        )
                 }
             </div>
             {
